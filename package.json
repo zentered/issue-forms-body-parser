@@ -1,6 +1,7 @@
 {
   "name": "@zentered/issue-forms-body-parser",
   "version": "1.0.0",
+  "private": false,
   "description": "Tech Events meet Issue Ops",
   "keywords": [
     "issues",
@@ -27,7 +28,7 @@
     }
   ],
   "type": "module",
-  "main": "dist/index.js",
+  "main": "src/parse.js",
   "scripts": {
     "build": "ncc build src/index.js -o dist --license licenses.txt",
     "release": "run-s lint test build",
@@ -80,11 +81,6 @@
   "release": {
     "branches": [
       "main"
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/github"
     ]
   }
 }
