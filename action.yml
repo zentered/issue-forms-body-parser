@@ -2,7 +2,7 @@ name: GitHub Issue Forms Body Parser
 author: PatrickHeneise
 description:
   'Issue Forms is a great way to structure GitHub Issues to an expected format,
-  and to make it easier to capture information from the user.'
+  and to make it easier to capture information.'
 branding:
   color: blue
   icon: chevron-right
