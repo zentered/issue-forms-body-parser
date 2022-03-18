@@ -45,7 +45,6 @@ function parseTime(text) {
       parse(text, commonTimeFormats[match.indexOf(true)], new Date()),
       loc
     )
-    console.log(time)
     return formatInTimeZone(time, loc, 'HH:mm')
   } else {
     return null

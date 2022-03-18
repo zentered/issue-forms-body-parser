@@ -2,7 +2,7 @@
   "name": "@zentered/issue-forms-body-parser",
   "version": "1.0.0",
   "private": false,
-  "description": "Tech Events meet Issue Ops",
+  "description": "Parser for GitHub Issue Form body, also available as GitHub Action",
   "keywords": [
     "issues",
     "forms",
