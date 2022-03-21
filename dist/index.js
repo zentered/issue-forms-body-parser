@@ -55909,7 +55909,6 @@ var __webpack_exports__ = {}
     core.info('Parsing issue body ...')
 
     try {
-      console.log(github.context)
       const parsedContent = await parseMD(github.context.payload.issue.body)
 
       if (parsedContent !== undefined) {
