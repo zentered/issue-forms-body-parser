@@ -27,6 +27,8 @@ with valuable feedback from [Steffen](https://gist.github.com/steffen)\_
 
 ## Features
 
+- :white_check_mark: npm version available
+  `npm i @zentered/issue-forms-body-parser`
 - :white_check_mark: parse question/answer format into title/text as JSON
 - :white_check_mark: parse line items and "tasks" with separate `checked`
   attributes
@@ -86,6 +88,8 @@ See more examples in [md test cases](./test/test-issue-1.md) and
 
 ## Installation & Usage
 
+### GitHub Actions
+
 ```yml
 name: Issue Forms Body Parser
 
@@ -99,6 +103,22 @@ jobs:
         id: parse
         uses: zentered/issue-forms-body-parser@1.0.0
       - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
+```
+
+### NPM
+
+The parser is available as a standalone library:
+
+```
+    npm i @zentered/issue-forms-body-parser
+    # OR yarn add @zentered/issue-forms-body-parser
+```
+
+Usage:
+
+```
+import bodyParser from '@zentered/issue-forms-body-parser'
+const issueData = await bodyParser(issue.body)
 ```
 
 ## Development & Testing
