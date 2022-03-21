@@ -1,0 +1,13 @@
+name: e2e test
+
+on: issues
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Issue Forms Body Parser
+        id: parse
+        uses: ./
+      - run: echo "${{ toJSON(steps.parse.outputs.data) }}"

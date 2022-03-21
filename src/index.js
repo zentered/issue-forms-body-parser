@@ -9,7 +9,7 @@ async function run() {
     const parsedContent = await parse(github.context.payload.issue.body)
 
     if (parsedContent !== undefined) {
-      core.setOutput('payload', parsedContent)
+      core.setOutput('data', parsedContent)
     } else {
       core.setFailed(`There was no valid payload found in the issue.`)
     }

@@ -101,6 +101,18 @@ jobs:
       - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
 ```
 
+## Development & Testing
+
+You can use [act](https://github.com/nektos/act) to test this Action locally.
+
+`npm run build && act issue -e test/issue.json`
+
+or run:
+
+`npm test`
+
+to test the parser.
+
 ## Links
 
 - [Creating issue forms](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository#creating-issue-forms)
