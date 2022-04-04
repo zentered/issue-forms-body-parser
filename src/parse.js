@@ -20,17 +20,18 @@ const commonDateFormats = [
   'dd.MM.yy'
 ]
 
-const commonTimeFormats = ['HH:mm', 'hh:mm a', 'hh:mm A']
+const commonTimeFormats = ['HH:mm', 'HH.mm', 'hh:mm a', 'hh:mm A']
 
 function parseDate(text) {
   const match = commonDateFormats.map((format) => {
     return isMatch(text, format)
   })
   if (match.indexOf(true) > -1) {
-    return zonedTimeToUtc(
+    const date = zonedTimeToUtc(
       parse(text, commonDateFormats[match.indexOf(true)], new Date()),
       loc
     ).toJSON()
+    return date.split('T')[0]
   } else {
     return null
   }
