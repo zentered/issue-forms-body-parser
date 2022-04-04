@@ -55809,14 +55809,26 @@ var __webpack_exports__ = {}
     'dd.MM.yy'
   ]
 
-  const commonTimeFormats = ['HH:mm', 'hh:mm a', 'hh:mm A']
+  const commonTimeFormats = ['HH:mm', 'HH.mm', 'hh:mm a', 'hh:mm A']
+
+  function parseDuration(text) {
+    const duration = {
+      hours: 0,
+      minutes: 0
+    }
+
+    const pieces = text.replace('m', '').split('h')
+    duration.hours = parseInt(pieces[0]) ? parseInt(pieces[0]) : 0
+    duration.minutes = parseInt(pieces[1]) ? parseInt(pieces[1]) : 0
+    return duration
+  }
 
   function parse_parseDate(text) {
     const match = commonDateFormats.map((format) => {
       return (0, date_fns.isMatch)(text, format)
     })
     if (match.indexOf(true) > -1) {
-      return zonedTimeToUtc(
+      const date = zonedTimeToUtc(
         (0, date_fns.parse)(
           text,
           commonDateFormats[match.indexOf(true)],
@@ -55824,6 +55836,7 @@ var __webpack_exports__ = {}
         ),
         loc
       ).toJSON()
+      return date.split('T')[0]
     } else {
       return null
     }
@@ -55911,6 +55924,9 @@ var __webpack_exports__ = {}
           }
           if (time) {
             obj.time = time
+          }
+          if (obj.id === 'duration') {
+            obj.duration = parseDuration(obj.text)
           }
         }
         r.push(obj)

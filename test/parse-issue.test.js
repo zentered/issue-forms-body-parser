@@ -26,7 +26,12 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       date: '2022-03-11'
     },
     { id: 'time', title: 'Time', text: '16:00\n', time: '16:00' },
-    { id: 'duration', title: 'Duration', text: '2h\n' },
+    {
+      id: 'duration',
+      title: 'Duration',
+      text: '2h\n',
+      duration: { hours: 2, minutes: 0 }
+    },
     {
       id: 'list-item-checked',
       title: 'List Item Checked',

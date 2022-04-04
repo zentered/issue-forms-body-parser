@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import slugify from '@sindresorhus/slugify'
 import remarkStringify from 'remark-stringify'
 import { parse, isMatch } from 'date-fns'
+
 // if the system time is not UTC, we need to convert it to UTC
 import { zonedTimeToUtc, formatInTimeZone } from 'date-fns-tz/esm'
 const loc = 'UTC'
@@ -21,6 +22,18 @@ const commonDateFormats = [
 ]
 
 const commonTimeFormats = ['HH:mm', 'HH.mm', 'hh:mm a', 'hh:mm A']
+
+function parseDuration(text) {
+  const duration = {
+    hours: 0,
+    minutes: 0
+  }
+
+  const pieces = text.replace('m', '').split('h')
+  duration.hours = parseInt(pieces[0]) ? parseInt(pieces[0]) : 0
+  duration.minutes = parseInt(pieces[1]) ? parseInt(pieces[1]) : 0
+  return duration
+}
 
 function parseDate(text) {
   const match = commonDateFormats.map((format) => {
@@ -115,6 +128,9 @@ export default async function parseMD(body) {
         }
         if (time) {
           obj.time = time
+        }
+        if (obj.id === 'duration') {
+          obj.duration = parseDuration(obj.text)
         }
       }
       r.push(obj)
