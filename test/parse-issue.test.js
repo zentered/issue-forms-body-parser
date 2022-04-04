@@ -90,3 +90,15 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
   // console.log(JSON.stringify(actual, null, 0))
   t.deepEqual(actual, expected)
 })
+
+test('parse(md) return nothing', async (t) => {
+  const expected = []
+
+  const md = await readFile(
+    join(process.cwd(), 'test', 'test-issue-2.md'),
+    'utf8'
+  )
+  const actual = await fn(md)
+  // console.log(JSON.stringify(actual, null, 0))
+  t.deepEqual(actual, expected)
+})

@@ -92,10 +92,12 @@ export default async function parseMD(body) {
     const current = tokens.children[idx]
     const hasNext = idx + 1 < tokens.children.length
 
-    const obj = {}
     if (current.type === 'heading') {
-      obj.id = slugify(current.children[0].value)
-      obj.title = current.children[0].value
+      // issue-form answers start with a h3 heading, ignore everything else
+      const obj = {
+        id: slugify(current.children[0].value),
+        title: current.children[0].value
+      }
       if (hasNext) {
         const next = tokens.children[idx + 1]
         if (next.type === 'list') {
@@ -114,8 +116,8 @@ export default async function parseMD(body) {
           obj.time = time
         }
       }
+      r.push(obj)
     }
-    r.push(obj)
   }
 
   return r

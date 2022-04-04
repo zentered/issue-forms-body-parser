@@ -54492,6 +54492,20 @@ var __webpack_exports__ = {}
           })
     }
     return dtfCache[timeZone]
+  } // CONCATENATED MODULE: ./node_modules/date-fns-tz/esm/_lib/newDateUTC/index.js
+
+  /**
+   * Use instead of `new Date(Date.UTC(...))` to support years below 100 which doesn't work
+   * otherwise due to the nature of the
+   * [`Date` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#interpretation_of_two-digit_years.
+   *
+   * For `Date.UTC(...)`, use `newDateUTC(...).getTime()`.
+   */
+  function newDateUTC(fullYear, month, day, hour, minute, second, millisecond) {
+    var utcDate = new Date(0)
+    utcDate.setUTCFullYear(fullYear, month, day)
+    utcDate.setUTCHours(hour, minute, second, millisecond)
+    return utcDate
   } // CONCATENATED MODULE: ./node_modules/date-fns-tz/esm/_lib/tzParseTimezone/index.js
 
   var MILLISECONDS_IN_HOUR = 3600000
@@ -54568,30 +54582,30 @@ var __webpack_exports__ = {}
   }
 
   function toUtcDate(date) {
-    return new Date(
-      Date.UTC(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-        date.getMilliseconds()
-      )
+    return newDateUTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
     )
   }
 
   function calcOffset(date, timezoneString) {
     var tokens = tzTokenizeDate(date, timezoneString)
 
-    var asUTC = Date.UTC(
+    // ms dropped because it's not provided by tzTokenizeDate
+    var asUTC = newDateUTC(
       tokens[0],
       tokens[1] - 1,
       tokens[2],
       tokens[3] % 24,
       tokens[4],
-      tokens[5]
-    )
+      tokens[5],
+      0
+    ).getTime()
 
     var asTS = date.getTime()
     var over = asTS % 1000
@@ -54628,10 +54642,9 @@ var __webpack_exports__ = {}
 
   function validateTimezone(hours, minutes) {
     return (
-      (hours === 12 && (minutes == null || minutes === 0)) ||
-      (-11 <= hours &&
-        hours <= 11 &&
-        (minutes == null || (0 <= minutes && minutes < 59)))
+      -23 <= hours &&
+      hours <= 23 &&
+      (minutes == null || (0 <= minutes && minutes <= 59))
     )
   }
 
@@ -55155,7 +55168,7 @@ var __webpack_exports__ = {}
 
     var d = toDate(date, options)
 
-    var utc = Date.UTC(
+    var utc = newDateUTC(
       d.getFullYear(),
       d.getMonth(),
       d.getDate(),
@@ -55163,7 +55176,7 @@ var __webpack_exports__ = {}
       d.getMinutes(),
       d.getSeconds(),
       d.getMilliseconds()
-    )
+    ).getTime()
 
     var offsetMilliseconds = tzParseTimezone(timeZone, new Date(utc))
 
@@ -55340,7 +55353,7 @@ var __webpack_exports__ = {}
     var sign = offset > 0 ? '-' : '+'
     var absOffset = Math.abs(offset)
     var hours = addLeadingZeros(Math.floor(absOffset / 60), 2)
-    var minutes = addLeadingZeros(absOffset % 60, 2)
+    var minutes = addLeadingZeros(Math.floor(absOffset % 60), 2)
     return sign + hours + delimeter + minutes
   }
 
@@ -55876,10 +55889,12 @@ var __webpack_exports__ = {}
       const current = tokens.children[idx]
       const hasNext = idx + 1 < tokens.children.length
 
-      const obj = {}
       if (current.type === 'heading') {
-        obj.id = slugify(current.children[0].value)
-        obj.title = current.children[0].value
+        // issue-form answers start with a h3 heading, ignore everything else
+        const obj = {
+          id: slugify(current.children[0].value),
+          title: current.children[0].value
+        }
         if (hasNext) {
           const next = tokens.children[idx + 1]
           if (next.type === 'list') {
@@ -55898,8 +55913,8 @@ var __webpack_exports__ = {}
             obj.time = time
           }
         }
+        r.push(obj)
       }
-      r.push(obj)
     }
 
     return r
