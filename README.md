@@ -2,7 +2,6 @@
 
 ![Test](https://github.com/zentered/issue-forms-body-parser/workflows/Test/badge.svg)
 ![Release](https://github.com/zentered/issue-forms-body-parser/workflows/Publish/badge.svg)
-![Semantic Release](https://github.com/zentered/issue-forms-body-parser/workflows/Semantic%20Release/badge.svg)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![zentered.co](https://img.shields.io/badge/%3E-zentered.co-blue.svg?style=flat)](https://zentered.co)
 
