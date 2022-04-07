@@ -77,7 +77,7 @@ to structured, usable data:
     "id": "date",
     "title": "Date",
     "text": "11.03.2022\n",
-    "date": "2022-03-11T00:00:00.000Z"
+    "date": "2022-03-11"
   },
   { "id": "time", "title": "Time", "text": "16:00\n", "time": "16:00" }
 ]
