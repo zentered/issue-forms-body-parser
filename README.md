@@ -86,6 +86,14 @@ to structured, usable data:
 See more examples in [md test cases](./test/test-issue-1.md) and
 [test results](./test/parse-issue-test.md]).
 
+### Parsers
+
+- `date`: checks if the value matches a [common date format](https://github.com/zentered/issue-forms-body-parser/blob/main/src/parse.js#L14) and returns a formatted `date` field (in UTC).
+- `time`: checks if the value matches a [common time format](https://github.com/zentered/issue-forms-body-parser/blob/main/src/parse.js#L24) and returns a formatted `time` field.
+- `lists`: automatically returns lists as arrays
+- `duration`: currently only the format `XXhYYm` is supported as duration, ie. `1h30m` returns a `duration` object with `hours` and `minutes`.
+
+
 ## Installation & Usage
 
 ### GitHub Actions
