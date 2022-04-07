@@ -1,3 +1,5 @@
+'use strict'
+
 import date from './date.js'
 import time from './time.js'
 import duration from './duration.js'

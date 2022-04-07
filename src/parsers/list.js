@@ -1,3 +1,5 @@
+'use strict'
+
 export default function parseList(list) {
   return list.children
     .map((item) => {

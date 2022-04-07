@@ -1,3 +1,5 @@
+'use strict'
+
 export default function parseDuration(text) {
   const duration = {
     hours: 0,

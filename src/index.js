@@ -1,3 +1,5 @@
+'use strict'
+
 import github from '@actions/github'
 import core from '@actions/core'
 import parse from './parse.js'
