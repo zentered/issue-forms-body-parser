@@ -79,6 +79,7 @@ to structured, usable data:
     "date": "2022-03-11"
   },
   "time": {
+    "order": 3,
     "title": "Time",
     "text": "16:00",
     "time": "16:00"
