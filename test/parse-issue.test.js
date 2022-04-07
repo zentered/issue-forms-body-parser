@@ -12,24 +12,24 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
     {
       id: 'event-description',
       title: 'Event Description',
-      text: "Let's meet for coffee and chat about tech, coding, Cyprus and the newly formed\nCDC (Cyprus Developer Community).\n"
+      text: "Let's meet for coffee and chat about tech, coding, Cyprus and the newly formed\nCDC (Cyprus Developer Community)."
     },
     {
       id: 'location',
       title: 'Location',
-      text: '[Cafe Nero Finikoudes, Larnaka](https://goo.gl/maps/Bzjxdeat3BSdsUSVA)\n'
+      text: '[Cafe Nero Finikoudes, Larnaka](https://goo.gl/maps/Bzjxdeat3BSdsUSVA)'
     },
     {
       id: 'date',
       title: 'Date',
-      text: '11.03.2022\n',
+      text: '11.03.2022',
       date: '2022-03-11'
     },
-    { id: 'time', title: 'Time', text: '16:00\n', time: '16:00' },
+    { id: 'time', title: 'Time', text: '16:00', time: '16:00' },
     {
       id: 'duration',
       title: 'Duration',
-      text: '2h\n',
+      text: '2h',
       duration: { hours: 2, minutes: 0 }
     },
     {
@@ -41,7 +41,7 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
           text: "I agree to follow this project's\nCode of Conduct"
         }
       ],
-      text: "*   [x] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)\n"
+      text: "*   [x] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)"
     },
     {
       id: 'list-item-unchecked',
@@ -52,7 +52,7 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
           text: "I agree to follow this project's\nCode of Conduct"
         }
       ],
-      text: "*   [ ] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)\n"
+      text: "*   [ ] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)"
     },
     {
       id: 'mixed-task-list',
@@ -64,7 +64,7 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
         { checked: true, text: 'checked 3' },
         { checked: false, text: 'unchecked 2' }
       ],
-      text: '*   [x] checked\n*   [ ] unchecked\n*   [x] checked 2\n*   [x] checked 3\n*   [ ] unchecked 2\n'
+      text: '*   [x] checked\n*   [ ] unchecked\n*   [x] checked 2\n*   [x] checked 3\n*   [ ] unchecked 2'
     },
     {
       id: 'complex-list',
@@ -73,17 +73,17 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
         { checked: null, text: 'one' },
         { checked: null, text: 'two' }
       ],
-      text: '*   one\n*   two\n    *   three\n    *   four\n        1.  five\n        2.  six\n'
+      text: '*   one\n*   two\n    *   three\n    *   four\n        1.  five\n        2.  six'
     },
     {
       id: 'repositories',
       title: 'Repositories',
-      text: '```csv\nhttps://example.com/repository-1\nhttps://example.com/repository-2\n```\n'
+      text: '```csv\nhttps://example.com/repository-1\nhttps://example.com/repository-2\n```'
     },
     {
       id: 'visibility',
       title: 'Visibility',
-      text: 'Internal\n'
+      text: 'Internal'
     }
   ]
 
