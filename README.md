@@ -64,17 +64,17 @@ to structured, usable data:
   {
     "id": "event-description",
     "title": "Event Description",
-    "text": "Let's meet for coffee and chat about tech, coding, Cyprus and the newly formed\nCDC (Cyprus Developer Community).\n"
+    "text": "Let's meet for coffee and chat about tech, coding, Cyprus and the newly formed\nCDC (Cyprus Developer Community)."
   },
   {
     "id": "location",
     "title": "Location",
-    "text": "Cafe Nero Finikoudes, Larnaka\n"
+    "text": "Cafe Nero Finikoudes, Larnaka"
   },
   {
     "id": "date",
     "title": "Date",
-    "text": "11.03.2022\n",
+    "text": "11.03.2022",
     "date": "2022-03-11"
   },
   { "id": "time", "title": "Time", "text": "16:00\n", "time": "16:00" }
