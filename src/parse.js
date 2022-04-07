@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import slugify from '@sindresorhus/slugify'
 import remarkStringify from 'remark-stringify'
 import { parse, isMatch } from 'date-fns'
+import stripFinalNewline from 'strip-final-newline'
 
 // if the system time is not UTC, we need to convert it to UTC
 import { zonedTimeToUtc, formatInTimeZone } from 'date-fns-tz/esm'
@@ -117,10 +118,11 @@ export default async function parseMD(body) {
         if (next.type === 'list') {
           obj.list = parseList(next).flat()
         }
-        obj.text = await unified()
+        const text = await unified()
           .use(remarkGfm)
           .use(remarkStringify)
           .stringify(next)
+        obj.text = stripFinalNewline(text)
         const date = parseDate(obj.text)
         const time = parseTime(obj.text)
         if (date) {
