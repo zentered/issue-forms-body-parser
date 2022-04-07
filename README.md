@@ -20,9 +20,8 @@ and provides structured data to create calendar entries (ie `.ics` files for
 [calendar subscriptions with GitEvents](https://github.com/gitevents/ics)),
 calling 3rd party APIs, etc.
 
-\_Inspired by:
-[Peter Murray's Issue Forms Body Parser](https://github.com/peter-murray/issue-forms-body-parser)
-with valuable feedback from [Steffen](https://gist.github.com/steffen)\_
+_Inspired by: [Peter Murray's Issue Forms Body Parser](https://github.com/peter-murray/issue-forms-body-parser)
+with valuable feedback from [Steffen](https://gist.github.com/steffen)_
 
 ## Features
 
