@@ -20,7 +20,8 @@ and provides structured data to create calendar entries (ie `.ics` files for
 [calendar subscriptions with GitEvents](https://github.com/gitevents/ics)),
 calling 3rd party APIs, etc.
 
-_Inspired by: [Peter Murray's Issue Forms Body Parser](https://github.com/peter-murray/issue-forms-body-parser)
+_Inspired by:
+[Peter Murray's Issue Forms Body Parser](https://github.com/peter-murray/issue-forms-body-parser)
 with valuable feedback from [Steffen](https://gist.github.com/steffen)_
 
 ## Features
@@ -60,25 +61,30 @@ Cafe Nero Finikoudes, Larnaka
 to structured, usable data:
 
 ```json
-[
-  {
-    "id": "event-description",
+{
+  "event-description": {
+    "order": 0,
     "title": "Event Description",
     "text": "Let's meet for coffee and chat about tech, coding, Cyprus and the newly formed\nCDC (Cyprus Developer Community)."
   },
-  {
-    "id": "location",
+  "location": {
+    "order": 1,
     "title": "Location",
     "text": "Cafe Nero Finikoudes, Larnaka"
   },
-  {
-    "id": "date",
+  "date": {
+    "order": 2,
     "title": "Date",
     "text": "11.03.2022",
     "date": "2022-03-11"
   },
-  { "id": "time", "title": "Time", "text": "16:00\n", "time": "16:00" }
-]
+  "time": {
+    "order": 3,
+    "title": "Time",
+    "text": "16:00",
+    "time": "16:00"
+  }
+}
 ```
 
 See more examples in [md test cases](./test/test-issue-1.md) and
@@ -86,11 +92,15 @@ See more examples in [md test cases](./test/test-issue-1.md) and
 
 ### Parsers
 
-- `date`: checks if the value matches a [common date format](https://github.com/zentered/issue-forms-body-parser/blob/main/src/parse.js#L14) and returns a formatted `date` field (in UTC).
-- `time`: checks if the value matches a [common time format](https://github.com/zentered/issue-forms-body-parser/blob/main/src/parse.js#L24) and returns a formatted `time` field.
+- `date`: checks if the value matches a
+  [common date format](https://github.com/zentered/issue-forms-body-parser/blob/main/src/parsers/date.js#L7)
+  and returns a formatted `date` field (in UTC).
+- `time`: checks if the value matches a
+  [common time format](https://github.com/zentered/issue-forms-body-parser/blob/main/src/parsers/time.js#L7)
+  and returns a formatted `time` field.
 - `lists`: automatically returns lists as arrays
-- `duration`: currently only the format `XXhYYm` is supported as duration, ie. `1h30m` returns a `duration` object with `hours` and `minutes`.
-
+- `duration`: currently only the format `XXhYYm` is supported as duration, ie.
+  `1h30m` returns a `duration` object with `hours` and `minutes`.
 
 ## Installation & Usage
 
@@ -107,7 +117,7 @@ jobs:
     steps:
       - name: Issue Forms Body Parser
         id: parse
-        uses: zentered/issue-forms-body-parser@v1.2.0
+        uses: zentered/issue-forms-body-parser@v2.0.0
       - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
 ```
 
