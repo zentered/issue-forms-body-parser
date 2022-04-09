@@ -55863,15 +55863,32 @@ var __webpack_exports__ = {}
   } // CONCATENATED MODULE: ./src/parsers/duration.js
 
   function parseDuration(text) {
+    let matched = false
     const duration = {
       hours: 0,
       minutes: 0
     }
 
-    const pieces = text.replace('m', '').split('h')
-    duration.hours = parseInt(pieces[0]) ? parseInt(pieces[0]) : 0
-    duration.minutes = parseInt(pieces[1]) ? parseInt(pieces[1]) : 0
-    return duration
+    const hoursAndMinutes = new RegExp(/([0-9]+)h([0-9]+)m/)
+    const hours = new RegExp(/([0-9]+)h/)
+
+    if (text.match(hoursAndMinutes)) {
+      matched = true
+      const [, h, m] = text.match(hoursAndMinutes)
+      duration.hours = parseInt(h)
+      duration.minutes = parseInt(m)
+    } else if (text.match(hours)) {
+      matched = true
+      const [, h] = text.match(hours)
+      duration.hours = parseInt(h)
+      duration.minutes = 0
+    }
+
+    if (matched) {
+      return duration
+    } else {
+      return null
+    }
   } // CONCATENATED MODULE: ./src/parsers/list.js
 
   function parseList(list) {
@@ -55915,53 +55932,75 @@ var __webpack_exports__ = {}
       return []
     }
 
-    const r = {}
-    let counter = 0
-    for (let idx = 0; idx < tokens.children.length; idx = idx + 2) {
-      const current = tokens.children[idx]
-      const hasNext = idx + 1 < tokens.children.length
+    const structuredResponse = {}
+    let currentHeading = null
+    for (const token of tokens.children) {
+      const text = await unified()
+        .use(remarkGfm)
+        .use(remark_stringify)
+        .stringify(token)
+      const cleanText = stripFinalNewline(text)
 
-      if (current.type === 'heading') {
-        const key = slugify(current.children[0].value)
+      // issue forms uses h3 as a heading
+      if (token.type === 'heading' && token.depth === 3) {
+        currentHeading = slugify(token.children[0].value)
+        structuredResponse[currentHeading] = {
+          title: token.children[0].value,
+          content: []
+        }
+      } else if (token.type === 'paragraph' && currentHeading) {
+        const obj = structuredResponse[currentHeading]
 
-        // issue-form answers start with a h3 heading, ignore everything else for now
-        const obj = {
-          title: current.children[0].value,
-          order: counter++
+        const date = parsers_parseDate(cleanText)
+        const time = parsers_parseTime(cleanText)
+        const duration = parsers_parseDuration(cleanText)
+
+        if (date) {
+          obj.date = date
         }
 
-        if (hasNext) {
-          const next = tokens.children[idx + 1]
-          if (next.type === 'list') {
-            obj.list = parsers_parseList(next).flat()
-          }
-          const text = await unified()
-            .use(remarkGfm)
-            .use(remark_stringify)
-            .stringify(next)
-          obj.text = stripFinalNewline(text)
-
-          const date = parsers_parseDate(obj.text)
-          const time = parsers_parseTime(obj.text)
-
-          if (date) {
-            obj.date = date
-          }
-
-          if (time) {
-            obj.time = time
-          }
-
-          if (key === 'duration') {
-            obj.duration = parsers_parseDuration(obj.text)
-          }
-
-          r[key] = obj
+        if (time) {
+          obj.time = time
         }
+
+        if (duration) {
+          obj.duration = duration
+        }
+
+        obj.content.push(cleanText)
+      } else if (token.type === 'list') {
+        const obj = structuredResponse[currentHeading]
+        obj.text = cleanText
+        obj.list = parsers_parseList(token).flat()
+      } else if (token.type === 'html') {
+        const obj = structuredResponse[currentHeading]
+        obj.content.push(token.html)
+      } else if (token.type === 'code') {
+        const obj = structuredResponse[currentHeading]
+        obj.lang = token.lang
+        obj.text = cleanText
+      } else if (token.type === 'heading' && token.depth > 3) {
+        const obj = structuredResponse[currentHeading]
+        obj.content.push(token.children[0].value)
+      } else {
+        console.log('unhandled token type')
+        console.log(token)
       }
     }
 
-    return r
+    for (const key in structuredResponse) {
+      const token = structuredResponse[key]
+      const content = token.content.filter(Boolean)
+      if (content && content.length > 0) {
+        if (content.length === 1) {
+          token.text = content[0]
+        }
+        token.text = content.join('\n\n')
+      }
+      token.content = content
+    }
+
+    return structuredResponse
   } // CONCATENATED MODULE: ./src/index.js
 
   async function run() {
