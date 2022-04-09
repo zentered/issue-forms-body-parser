@@ -1,7 +1,16 @@
 ### Event Description
 
-Let's meet for coffee and chat about tech, coding, Cyprus and the newly formed
-CDC (Cyprus Developer Community).
+<img width="1107" alt="The Brewery Larnaka" src="https://user-images.githubusercontent.com/3581331/162574191-3c023b32-34d9-4035-90bf-7297cdccaf06.png">
+
+Welcome to the CDC - Cyprus Developer Community! Join us for our monthly Larnaka
+meet & greet event. Meet likeminded people, discuss topics we would like to hear
+about in upcoming talks, welcome potential speakers, discuss all things tech and
+have fun!
+
+#### Notice with regards to COVID:
+
+All attendees must follow measures in accordance with Ministry of Health
+directives. https://www.pio.gov.cy/coronavirus/eng
 
 ### Location
 
@@ -36,15 +45,6 @@ CDC (Cyprus Developer Community).
 - [x] checked 2
 - [x] checked 3
 - [ ] unchecked 2
-
-### Complex List
-
-- one
-- two
-  - three
-  - four
-    1. five
-    2. six
 
 ### Repositories
 

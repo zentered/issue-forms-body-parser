@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import slugify from '@sindresorhus/slugify'
 import remarkStringify from 'remark-stringify'
 import stripFinalNewline from 'strip-final-newline'
+
 import {
   parseDate,
   parseTime,
@@ -19,51 +20,73 @@ export default async function parseMD(body) {
     return []
   }
 
-  const r = {}
-  let counter = 0
-  for (let idx = 0; idx < tokens.children.length; idx = idx + 2) {
-    const current = tokens.children[idx]
-    const hasNext = idx + 1 < tokens.children.length
+  const structuredResponse = {}
+  let currentHeading = null
+  for (const token of tokens.children) {
+    const text = await unified()
+      .use(remarkGfm)
+      .use(remarkStringify)
+      .stringify(token)
+    const cleanText = stripFinalNewline(text)
 
-    if (current.type === 'heading') {
-      const key = slugify(current.children[0].value)
+    // issue forms uses h3 as a heading
+    if (token.type === 'heading' && token.depth === 3) {
+      currentHeading = slugify(token.children[0].value)
+      structuredResponse[currentHeading] = {
+        title: token.children[0].value,
+        content: []
+      }
+    } else if (token.type === 'paragraph' && currentHeading) {
+      const obj = structuredResponse[currentHeading]
 
-      // issue-form answers start with a h3 heading, ignore everything else for now
-      const obj = {
-        title: current.children[0].value,
-        order: counter++
+      const date = parseDate(cleanText)
+      const time = parseTime(cleanText)
+      const duration = parseDuration(cleanText)
+
+      if (date) {
+        obj.date = date
       }
 
-      if (hasNext) {
-        const next = tokens.children[idx + 1]
-        if (next.type === 'list') {
-          obj.list = parseList(next).flat()
-        }
-        const text = await unified()
-          .use(remarkGfm)
-          .use(remarkStringify)
-          .stringify(next)
-        obj.text = stripFinalNewline(text)
-
-        const date = parseDate(obj.text)
-        const time = parseTime(obj.text)
-
-        if (date) {
-          obj.date = date
-        }
-
-        if (time) {
-          obj.time = time
-        }
-
-        if (key === 'duration') {
-          obj.duration = parseDuration(obj.text)
-        }
-
-        r[key] = obj
+      if (time) {
+        obj.time = time
       }
+
+      if (duration) {
+        obj.duration = duration
+      }
+
+      obj.content.push(cleanText)
+    } else if (token.type === 'list') {
+      const obj = structuredResponse[currentHeading]
+      obj.text = cleanText
+      obj.list = parseList(token).flat()
+    } else if (token.type === 'html') {
+      const obj = structuredResponse[currentHeading]
+      obj.content.push(token.html)
+    } else if (token.type === 'code') {
+      const obj = structuredResponse[currentHeading]
+      obj.lang = token.lang
+      obj.text = cleanText
+    } else if (token.type === 'heading' && token.depth > 3) {
+      const obj = structuredResponse[currentHeading]
+      obj.content.push(token.children[0].value)
+    } else {
+      console.log('unhandled token type')
+      console.log(token)
     }
   }
 
-  return r
+  for (const key in structuredResponse) {
+    const token = structuredResponse[key]
+    const content = token.content.filter(Boolean)
+    if (content && content.length > 0) {
+      if (content.length === 1) {
+        token.text = content[0]
+      }
+      token.text = content.join('\n\n')
+    }
+    token.content = content
+  }
+
+  return structuredResponse
 }
