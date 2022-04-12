@@ -29,12 +29,8 @@
   ],
   "type": "module",
   "src": "src/parse.js",
-  "exports": {
-    "require": "./pkg/parse.cjs",
-    "default": "./pkg/parse.modern.js"
-  },
   "main": "./pkg/parse.cjs",
-  "module": "./pkg/parse.module.js",
+  "module": "./pkg/parse.js",
   "scripts": {
     "build": "run-p build:*",
     "build:package": "microbundle",
