@@ -78,7 +78,36 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       lang: 'csv',
       text: '```csv\nhttps://example.com/repository-1\nhttps://example.com/repository-2\n```'
     },
-    visibility: { title: 'Visibility', content: ['Internal'], text: 'Internal' }
+    visibility: {
+      title: 'Visibility',
+      content: ['Internal'],
+      text: 'Internal'
+    },
+    'repository-name': {
+      title: 'Repository name',
+      content: ['check_underscores_2'],
+      text: 'check_underscores_2'
+    },
+    'repository-description': {
+      title: 'Repository description',
+      content: ['*No response*'],
+      text: '*No response*'
+    },
+    'repository-visibility': {
+      title: 'Repository visibility',
+      content: ['Internal'],
+      text: 'Internal'
+    },
+    'repository-justification': {
+      title: 'Repository justification',
+      content: ['*No response*'],
+      text: '*No response*'
+    },
+    'repository-access': {
+      title: 'Repository access',
+      content: ['@tinyfists/under_scores'],
+      text: '@tinyfists/under_scores'
+    }
   }
 
   const md = await readFile(
@@ -91,14 +120,19 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
   t.same(actual, expected)
 })
 
-test('parse(md) return nothing', async (t) => {
-  const expected = {}
+test(
+  'parse(md) should parse issues with frontmatter',
+  { skip: true },
+  async (t) => {
+    // TODO: this isn't implemented yet
+    const expected = {}
 
-  const md = await readFile(
-    join(process.cwd(), 'test', 'test-issue-2.md'),
-    'utf8'
-  )
-  const actual = await fn(md)
-  // console.log(JSON.stringify(actual, null, 0))
-  t.same(actual, expected)
-})
+    const md = await readFile(
+      join(process.cwd(), 'test', 'test-issue-2.md'),
+      'utf8'
+    )
+    const actual = await fn(md)
+    // console.log(JSON.stringify(actual, null, 0))
+    t.same(actual, expected)
+  }
+)
