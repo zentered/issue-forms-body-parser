@@ -27,7 +27,12 @@ export default async function parseMD(body) {
       .use(remarkGfm)
       .use(remarkStringify)
       .stringify(token)
-    const cleanText = stripFinalNewline(text)
+    let cleanText = stripFinalNewline(text)
+
+    // remove `\\_`
+    if (cleanText.indexOf('\\_') > -1) {
+      cleanText = cleanText.replace(/\\_/g, '_')
+    }
 
     // issue forms uses h3 as a heading
     if (token.type === 'heading' && token.depth === 3) {
