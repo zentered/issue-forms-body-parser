@@ -14,7 +14,7 @@ import {
   parseList
 } from './parsers/index.js'
 
-export default async function parseMD(body, {silent = false}) {
+export default async function parseMD(body) {
   const tokens = await unified().use(remarkParse).use(remarkGfm).parse(body)
   if (!tokens) {
     return []
@@ -76,7 +76,7 @@ export default async function parseMD(body, {silent = false}) {
       const obj = structuredResponse[currentHeading]
       obj.content.push(token.children[0].value)
     } else {
-      if(!silent){
+      if(process.env.DEBUG){
         console.log('unhandled token type')
         console.log(token)  
       }
