@@ -76,8 +76,10 @@ export default async function parseMD(body) {
       const obj = structuredResponse[currentHeading]
       obj.content.push(token.children[0].value)
     } else {
-      console.log('unhandled token type')
-      console.log(token)
+      if(process.env.DEBUG){
+        console.log('unhandled token type')
+        console.log(token)  
+      }
     }
   }
 
