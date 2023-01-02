@@ -35,10 +35,11 @@ export default async function parseMD(body) {
     }
 
     // issue forms uses h3 as a heading
-    if (token.type === 'heading' && token.depth === 3) {
+    if (token.type === 'heading') {
       currentHeading = slugify(token.children[0].value)
       structuredResponse[currentHeading] = {
         title: token.children[0].value,
+        heading: token.depth,
         content: []
       }
     } else if (token.type === 'paragraph' && currentHeading) {
@@ -72,13 +73,10 @@ export default async function parseMD(body) {
       const obj = structuredResponse[currentHeading]
       obj.lang = token.lang
       obj.text = cleanText
-    } else if (token.type === 'heading' && token.depth > 3) {
-      const obj = structuredResponse[currentHeading]
-      obj.content.push(token.children[0].value)
     } else {
-      if(process.env.DEBUG){
+      if (process.env.DEBUG) {
         console.log('unhandled token type')
-        console.log(token)  
+        console.log(token)
       }
     }
   }
