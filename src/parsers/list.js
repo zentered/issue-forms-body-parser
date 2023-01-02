@@ -14,7 +14,8 @@ export default function parseList(list) {
               listItem.text = child.children
                 .map((c) => {
                   if (c.type === 'link') {
-                    return c.children[0].value
+                    listItem.link = c.url
+                    return `[${c.children[0].value}](${c.url})`
                   } else {
                     return c.value
                   }
