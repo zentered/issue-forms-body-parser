@@ -117,7 +117,40 @@ jobs:
     steps:
       - name: Issue Forms Body Parser
         id: parse
-        uses: zentered/issue-forms-body-parser@v1.4.3
+        uses: zentered/issue-forms-body-parser@v2.0.0
+      - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
+```
+
+You can also provide a custom `body` input:
+
+```yml
+name: Issue Forms Body Parser
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        type: string
+        required: true
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the issue
+        id: read_issue_body
+        run:
+          echo "body=$(gh issue view ${{ inputs.issue_number }} --repo ${{
+          github.repo }} --json body --jq '.body')" >> $GITHUB_OUTPUT
+
+      - name: Issue Forms Body Parser
+        id: parse
+        uses: zentered/issue-forms-body-parser@v2.0.0
+        with:
+          body: ${{ steps.read_issue_body.output.body }}
+
       - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
 ```
 
@@ -141,7 +174,7 @@ const issueData = await bodyParser(issue.body)
 
 You can use [act](https://github.com/nektos/act) to test this Action locally.
 
-`npm run build && act issue -e test/issue.json`
+`npm run build && act issues -e test/issue.json`
 
 or run:
 

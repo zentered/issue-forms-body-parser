@@ -6,6 +6,9 @@ description:
 branding:
   color: blue
   icon: chevron-right
+inputs:
+  body:
+    description: 'The body to parse.'
 outputs:
   data:
     description:

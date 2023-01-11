@@ -22,3 +22,26 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
+
+      - run: npm run build
+
+      - name: Read an issue content
+        id: read_issue
+        run: |
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          cat ./test/test-issue-3.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Issue Forms Body Parser With Provided Body
+        id: parse_with_body
+        uses: ./
+        with:
+          body: ${{ steps.read_issue.outputs.body }}
+
+      - name: Test input body parsed
+        run: |
+          expected="Event Description"
+          title=$(echo ${{ toJSON(steps.parse_with_body.outputs.data) }} | jq -r '.["event-description"].title')
+          if [[ $title != $expected ]]; then
+            echo "Title \"${title}\" does not match \"${expected}\""
+            exit 1
+          fi
