@@ -10,4 +10,17 @@ jobs:
       - name: Issue Forms Body Parser
         id: parse
         uses: ./
-      - run: echo "${{ toJSON(steps.parse.outputs.data) }}"
+      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
+
+      - name: Read an issue content
+        id: read_issue
+        run: |
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          cat ./test/test-issue-3.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Issue Forms Body Parser With Provided Body
+        id: parse_with_body
+        uses: ./
+        with:
+          body: ${{ steps.read_issue.outputs.body }}
+      - run: echo ${{ toJSON(steps.parse_with_body.outputs.data) }}
