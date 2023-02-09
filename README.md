@@ -118,7 +118,7 @@ jobs:
       - name: Issue Forms Body Parser
         id: parse
         uses: zentered/issue-forms-body-parser@v2.0.0
-      - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
+      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
 ```
 
 You can also provide a custom `body` input:
@@ -151,7 +151,7 @@ jobs:
         with:
           body: ${{ steps.read_issue_body.output.body }}
 
-      - run: echo "${{ JSON.stringify(steps.parse.outputs.data) }}"
+      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
 ```
 
 ### NPM
