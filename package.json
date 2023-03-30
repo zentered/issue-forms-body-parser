@@ -34,6 +34,10 @@
   "type": "module",
   "main": "./pkg/parse.cjs",
   "module": "./pkg/parse.js",
+  "exports": {
+    "import": "./pkg/parse.js",
+    "require": "./pkg/parse.cjs"
+  },
   "scripts": {
     "build": "run-p build:*",
     "build:package": "microbundle src/parse.js",
