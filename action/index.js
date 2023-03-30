@@ -52838,6 +52838,23 @@ const removeMootSeparators = (string, separator) => {
 		.replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, 'g'), '');
 };
 
+const buildPatternSlug = options => {
+	let negationSetPattern = 'a-z\\d';
+	negationSetPattern += options.lowercase ? '' : 'A-Z';
+
+	if (options.preserveCharacters.length > 0) {
+		for (const character of options.preserveCharacters) {
+			if (character === options.separator) {
+				throw new Error(`The separator character \`${options.separator}\` cannot be included in preserved characters: ${options.preserveCharacters}`);
+			}
+
+			negationSetPattern += escapeStringRegexp(character);
+		}
+	}
+
+	return new RegExp(`[^${negationSetPattern}]+`, 'g');
+};
+
 function slugify(string, options) {
 	if (typeof string !== 'string') {
 		throw new TypeError(`Expected a string, got \`${typeof string}\``);
@@ -52850,6 +52867,7 @@ function slugify(string, options) {
 		customReplacements: [],
 		preserveLeadingUnderscore: false,
 		preserveTrailingDash: false,
+		preserveCharacters: [],
 		...options
 	};
 
@@ -52867,15 +52885,19 @@ function slugify(string, options) {
 		string = decamelize(string);
 	}
 
-	let patternSlug = /[^a-zA-Z\d]+/g;
+	const patternSlug = buildPatternSlug(options);
 
 	if (options.lowercase) {
 		string = string.toLowerCase();
-		patternSlug = /[^a-z\d]+/g;
 	}
 
 	string = string.replace(patternSlug, options.separator);
 	string = string.replace(/\\/g, '');
+
+	// Detect contractions/possessives by looking for any word followed by a `-t`
+	// or `-s` in isolation and then remove it.
+	string = string.replace(/([a-zA-Z\d]+)-([ts])(-|$)/g, '$1$2$3');
+
 	if (options.separator) {
 		string = removeMootSeparators(string, options.separator);
 	}
@@ -55092,7 +55114,7 @@ function tzParseTimezone(timezoneString, date, isUtcDate) {
   var absoluteOffset
 
   // Empty string
-  if (timezoneString === '') {
+  if (!timezoneString) {
     return 0
   }
 
@@ -56233,7 +56255,7 @@ var tzFormattingTokensRegExp = /([xXOz]+)|''|'(''|[^'])+('|$)/g
  *
  * - Characters are now escaped using single quote symbols (`'`) instead of square brackets.
  *
- * @param {Date|String|Number} date - the original date
+ * @param {Date|Number} date - the original date
  * @param {String} format - the string of tokens
  * @param {OptionsWithTZ} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
  * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link

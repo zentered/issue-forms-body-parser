@@ -1,7 +1,7 @@
 'use strict'
 
 import { parse, isMatch } from 'date-fns'
-import { zonedTimeToUtc } from 'date-fns-tz/esm'
+import { zonedTimeToUtc } from 'date-fns-tz'
 
 const loc = 'UTC'
 const commonDateFormats = [
