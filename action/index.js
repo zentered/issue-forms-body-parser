@@ -56411,7 +56411,13 @@ function formatInTimeZone(date, timeZone, formatStr, options) {
 
 
 const time_loc = 'UTC'
-const commonTimeFormats = ['HH:mm', 'HH.mm', 'hh:mm a', 'hh:mm A']
+const commonTimeFormats = [
+  'HH:mm',
+  'HH.mm',
+  'hh:mm aaa',
+  'hh:mm a..aa',
+  'hh:mm aaaa'
+]
 
 function time_parseTime(text) {
   const match = commonTimeFormats.map((format) => {

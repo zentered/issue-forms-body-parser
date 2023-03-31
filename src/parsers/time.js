@@ -4,7 +4,13 @@ import { parse, isMatch } from 'date-fns'
 import { zonedTimeToUtc, formatInTimeZone } from 'date-fns-tz'
 
 const loc = 'UTC'
-const commonTimeFormats = ['HH:mm', 'HH.mm', 'hh:mm a', 'hh:mm A']
+const commonTimeFormats = [
+  'HH:mm',
+  'HH.mm',
+  'hh:mm aaa',
+  'hh:mm a..aa',
+  'hh:mm aaaa'
+]
 
 export default function parseTime(text) {
   const match = commonTimeFormats.map((format) => {
