@@ -93,7 +93,7 @@
     "npm-run-all": "^4.1.5",
     "pinst": "^3.0.0",
     "prettier": "^2.8.7",
-    "tap": "^16.3.4"
+    "tap": "^18.4.2"
   },
   "src": "src/parse.js"
 }
