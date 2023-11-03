@@ -68,23 +68,23 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
-    "@sindresorhus/slugify": "^2.2.0",
-    "date-fns": "^2.29.3",
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@sindresorhus/slugify": "^2.2.1",
+    "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
     "is-ci": "^3.0.1",
-    "remark-gfm": "^3.0.1",
-    "remark-parse": "^10.0.1",
-    "remark-stringify": "^10.0.2",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
     "strip-final-newline": "^3.0.0",
-    "unified": "^10.1.2"
+    "unified": "^11.0.4"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^17.4.4",
-    "@vercel/ncc": "^0.36.1",
-    "commitlint": "^17.5.1",
-    "eslint": "^8.37.0",
+    "@commitlint/config-conventional": "^18.1.0",
+    "@vercel/ncc": "^0.38.1",
+    "commitlint": "^18.2.0",
+    "eslint": "^8.52.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^8.0.3",
@@ -92,8 +92,11 @@
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "pinst": "^3.0.0",
-    "prettier": "^2.8.7",
-    "tap": "^18.4.2"
+    "prettier": "^3.0.3",
+    "tap": "^18.5.6"
   },
-  "src": "src/parse.js"
+  "src": "src/parse.js",
+  "engines": {
+    "node": ">=18"
+  }
 }

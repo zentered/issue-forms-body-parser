@@ -15,4 +15,4 @@ outputs:
       The extracted payload data from the issue body labels in JSON encoded form
 runs:
   main: action/index.js
-  using: node16
+  using: node20
