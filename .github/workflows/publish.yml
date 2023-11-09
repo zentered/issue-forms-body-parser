@@ -25,5 +25,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm test
+        env:
+          GITHUB_REPOSITORY: zentered/issue-forms-body-parser-test
       - run: npm run release
       - run: npx semantic-release

@@ -1,11 +1,10 @@
 'use strict'
 
-import t from 'tap'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 import fn from '../src/parse.js'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
-
-const test = t.test
 
 test('parse(md) should parse GitHub Issue Form data into useful, structured data', async (t) => {
   const expected = {
@@ -145,7 +144,7 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
   const actual = await fn(md)
   // console.log(JSON.stringify(actual, null, 0))
 
-  t.same(actual, expected)
+  assert.deepEqual(actual, expected)
 })
 
 // test('parse(md) should parse issues with frontmatter', async (t) => {
@@ -261,5 +260,5 @@ test('pasre(md) should parse Broadcast sections', async (t) => {
   const actual = await fn(md)
   // console.log(JSON.stringify(actual, null, 2))
 
-  t.same(actual, expected)
+  assert.deepEqual(actual, expected)
 })

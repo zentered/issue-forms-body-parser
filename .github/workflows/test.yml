@@ -24,6 +24,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
+        env:
+          GITHUB_REPOSITORY: zentered/issue-forms-body-parser-test
 
       - run: npm run build
 
