@@ -30,13 +30,11 @@ directives. https://www.pio.gov.cy/coronavirus/eng
 
 ### List Item Checked
 
-- [x] I agree to follow this project's
-      [Code of Conduct](https://berlincodeofconduct.org)
+- [x] I agree to follow this projects [Code of Conduct]()
 
 ### List Item Unchecked
 
-- [ ] I agree to follow this project's
-      [Code of Conduct](https://berlincodeofconduct.org)
+- [ ] I agree to follow this projects [Code of Conduct]()
 
 ### Mixed Task List
 

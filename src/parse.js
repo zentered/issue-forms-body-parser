@@ -6,6 +6,8 @@ import remarkGfm from 'remark-gfm'
 import slugify from '@sindresorhus/slugify'
 import remarkStringify from 'remark-stringify'
 import stripFinalNewline from 'strip-final-newline'
+import createDebug from 'debug'
+const debug = createDebug('body-parser')
 
 import {
   parseDate,
@@ -15,6 +17,7 @@ import {
 } from './parsers/index.js'
 
 export default async function parseMD(body) {
+  debug('parseMD()')
   const tokens = await unified().use(remarkParse).use(remarkGfm).parse(body)
   if (!tokens) {
     return []
@@ -74,10 +77,8 @@ export default async function parseMD(body) {
       obj.lang = token.lang
       obj.text = cleanText
     } else {
-      if (process.env.DEBUG) {
-        console.log('unhandled token type')
-        console.log(token)
-      }
+      debug('unhandled token type')
+      debug(token)
     }
   }
 

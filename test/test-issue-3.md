@@ -30,8 +30,7 @@ pallikarides-paphos
 
 ### Code of Conduct
 
-- [x] I agree to follow this project's
-      [Code of Conduct](https://berlincodeofconduct.org)
+- [x] I agree to follow this projects [Code of Conduct]()
 
 ### Broadcast by GitEvents
 

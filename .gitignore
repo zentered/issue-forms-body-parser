@@ -36,3 +36,4 @@ coverage
 # environment variables file
 .env
 .secrets
+.tap

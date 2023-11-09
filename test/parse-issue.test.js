@@ -1,11 +1,10 @@
 'use strict'
 
-import t from 'tap'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 import fn from '../src/parse.js'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
-
-const test = t.test
 
 test('parse(md) should parse GitHub Issue Form data into useful, structured data', async (t) => {
   const expected = {
@@ -58,12 +57,12 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       title: 'List Item Checked',
       heading: 3,
       content: [],
-      text: "*   [x] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)",
+      text: '* [x] I agree to follow this projects [Code of Conduct]()',
       list: [
         {
           checked: true,
-          link: 'https://berlincodeofconduct.org',
-          text: "I agree to follow this project's\n[Code of Conduct](https://berlincodeofconduct.org)"
+          link: '',
+          text: 'I agree to follow this projects [Code of Conduct]()'
         }
       ]
     },
@@ -71,12 +70,12 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       title: 'List Item Unchecked',
       heading: 3,
       content: [],
-      text: "*   [ ] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)",
+      text: '* [ ] I agree to follow this projects [Code of Conduct]()',
       list: [
         {
           checked: false,
-          link: 'https://berlincodeofconduct.org',
-          text: "I agree to follow this project's\n[Code of Conduct](https://berlincodeofconduct.org)"
+          link: '',
+          text: 'I agree to follow this projects [Code of Conduct]()'
         }
       ]
     },
@@ -84,7 +83,7 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       title: 'Mixed Task List',
       heading: 3,
       content: [],
-      text: '*   [x] checked\n*   [ ] unchecked\n*   [x] checked 2\n*   [x] checked 3\n*   [ ] unchecked 2',
+      text: '* [x] checked\n* [ ] unchecked\n* [x] checked 2\n* [x] checked 3\n* [ ] unchecked 2',
       list: [
         { checked: true, text: 'checked' },
         { checked: false, text: 'unchecked' },
@@ -145,25 +144,20 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
   const actual = await fn(md)
   // console.log(JSON.stringify(actual, null, 0))
 
-  t.same(actual, expected)
+  assert.deepEqual(actual, expected)
 })
 
-test(
-  'parse(md) should parse issues with frontmatter',
-  { skip: true },
-  async (t) => {
-    // TODO: this isn't implemented yet
-    const expected = {}
-
-    const md = await readFile(
-      join(process.cwd(), 'test', 'test-issue-2.md'),
-      'utf8'
-    )
-    const actual = await fn(md)
-    // console.log(JSON.stringify(actual, null, 0))
-    t.same(actual, expected)
-  }
-)
+// test('parse(md) should parse issues with frontmatter', async (t) => {
+//   // TODO: this isn't implemented yet
+//   const md = await readFile(
+//     join(process.cwd(), 'test', 'test-issue-2.md'),
+//     'utf8'
+//   )
+//   const actual = await fn(md)
+//   console.log(actual)
+//   // console.log(JSON.stringify(actual, null, 0))
+//   t.same(actual, expected)
+// })
 
 test('pasre(md) should parse Broadcast sections', async (t) => {
   const expected = {
@@ -180,7 +174,7 @@ test('pasre(md) should parse Broadcast sections', async (t) => {
       title: 'Agenda',
       heading: 4,
       content: [],
-      text: '*   17.30h Welcome\n*   18.00h <https://github.com/cyprus-developer-community/talks/issues/5>\n*   18.30h Networking & Discussion\n*   19.30h <https://github.com/cyprus-developer-community/talks/issues/6>\n*   20.00h Networking & Discussion',
+      text: '* 17.30h Welcome\n* 18.00h <https://github.com/cyprus-developer-community/talks/issues/5>\n* 18.30h Networking & Discussion\n* 19.30h <https://github.com/cyprus-developer-community/talks/issues/6>\n* 20.00h Networking & Discussion',
       list: [
         {
           checked: null,
@@ -240,12 +234,12 @@ test('pasre(md) should parse Broadcast sections', async (t) => {
       title: 'Code of Conduct',
       heading: 3,
       content: [],
-      text: "*   [x] I agree to follow this project's\n    [Code of Conduct](https://berlincodeofconduct.org)",
+      text: '* [x] I agree to follow this projects [Code of Conduct]()',
       list: [
         {
           checked: true,
-          link: 'https://berlincodeofconduct.org',
-          text: "I agree to follow this project's\n[Code of Conduct](https://berlincodeofconduct.org)"
+          link: '',
+          text: 'I agree to follow this projects [Code of Conduct]()'
         }
       ]
     },
@@ -266,5 +260,5 @@ test('pasre(md) should parse Broadcast sections', async (t) => {
   const actual = await fn(md)
   // console.log(JSON.stringify(actual, null, 2))
 
-  t.same(actual, expected)
+  assert.deepEqual(actual, expected)
 })

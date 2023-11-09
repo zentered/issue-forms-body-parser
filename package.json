@@ -32,21 +32,21 @@
     }
   ],
   "type": "module",
-  "main": "./pkg/parse.cjs",
-  "module": "./pkg/parse.js",
   "exports": {
     "import": "./pkg/parse.js",
     "require": "./pkg/parse.cjs"
   },
+  "main": "./pkg/parse.cjs",
+  "module": "./pkg/parse.js",
   "scripts": {
     "build": "run-p build:*",
     "build:package": "microbundle src/parse.js",
     "build:action": "ncc build src/index.js -o action --license licenses.txt",
     "release": "run-s lint test build",
     "lint": "eslint .",
+    "pretty": "prettier --write ./src ./test",
     "license-checker": "license-checker --production --onlyAllow=\"MIT;ISC;BSD-3-Clause;BSD-2-Clause;Apache-2.0\"",
-    "test": "tap --node-arg=--experimental-json-modules --test-env=GITHUB_REPOSITORY=zentered/issue-forms-body-parser-test -J test/*.test.js",
-    "test:report": "tap --test-env=GITHUB_REPOSITORY=zentered/issue-forms-body-parser-test -J test/*.test.js --cov",
+    "test": "node --test",
     "prepare": "is-ci || husky install"
   },
   "commitlint": {
@@ -68,32 +68,34 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
-    "@sindresorhus/slugify": "^2.2.0",
-    "date-fns": "^2.29.3",
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@sindresorhus/slugify": "^2.2.1",
+    "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "debug": "^4.3.4",
     "is-ci": "^3.0.1",
-    "remark-gfm": "^3.0.1",
-    "remark-parse": "^10.0.1",
-    "remark-stringify": "^10.0.2",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
     "strip-final-newline": "^3.0.0",
-    "unified": "^10.1.2"
+    "unified": "^11.0.4"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^17.4.4",
-    "@vercel/ncc": "^0.36.1",
-    "commitlint": "^17.5.1",
-    "eslint": "^8.37.0",
+    "@commitlint/config-conventional": "^18.1.0",
+    "@vercel/ncc": "^0.38.1",
+    "commitlint": "^18.2.0",
+    "eslint": "^8.53.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^8.0.3",
     "license-checker": "^25.0.1",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
-    "pinst": "^3.0.0",
-    "prettier": "^2.8.7",
-    "tap": "^18.4.2"
+    "prettier": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "src": "src/parse.js"
 }
