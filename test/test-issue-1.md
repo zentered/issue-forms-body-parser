@@ -1,6 +1,6 @@
 ### Event Description
 
-<img width="1107" alt="The Brewery Larnaka" src="https://user-images.githubusercontent.com/3581331/162574191-3c023b32-34d9-4035-90bf-7297cdccaf06.png">
+![image](https://github.com/cyprus-developer-community/events/assets/5837296/528716ea-a59a-41dc-a30f-77f642c25a3f)
 
 Welcome to the CDC - Cyprus Developer Community! Join us for our monthly Larnaka
 meet & greet event. Meet likeminded people, discuss topics we would like to hear

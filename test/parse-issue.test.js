@@ -11,16 +11,32 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
     'event-description': {
       title: 'Event Description',
       heading: 3,
-      content: [
-        'Welcome to the CDC - Cyprus Developer Community! Join us for our monthly Larnaka\nmeet & greet event. Meet likeminded people, discuss topics we would like to hear\nabout in upcoming talks, welcome potential speakers, discuss all things tech and\nhave fun!'
+      images: [
+        {
+          alt: 'image',
+          src: 'https://github.com/cyprus-developer-community/events/assets/5837296/528716ea-a59a-41dc-a30f-77f642c25a3f'
+        }
       ],
-      text: 'Welcome to the CDC - Cyprus Developer Community! Join us for our monthly Larnaka\nmeet & greet event. Meet likeminded people, discuss topics we would like to hear\nabout in upcoming talks, welcome potential speakers, discuss all things tech and\nhave fun!'
+      content: [
+        '![image](https://github.com/cyprus-developer-community/events/assets/5837296/528716ea-a59a-41dc-a30f-77f642c25a3f)',
+        'Welcome to the CDC - Cyprus Developer Community! Join us for our monthly Larnaka\n' +
+          'meet & greet event. Meet likeminded people, discuss topics we would like to hear\n' +
+          'about in upcoming talks, welcome potential speakers, discuss all things tech and\n' +
+          'have fun!'
+      ],
+      text: '![image](https://github.com/cyprus-developer-community/events/assets/5837296/528716ea-a59a-41dc-a30f-77f642c25a3f)\n\nWelcome to the CDC - Cyprus Developer Community! Join us for our monthly Larnaka\nmeet & greet event. Meet likeminded people, discuss topics we would like to hear\nabout in upcoming talks, welcome potential speakers, discuss all things tech and\nhave fun!'
     },
     'notice-with-regards-to-covid': {
       title: 'Notice with regards to COVID:',
       heading: 4,
       content: [
         'All attendees must follow measures in accordance with Ministry of Health\ndirectives. <https://www.pio.gov.cy/coronavirus/eng>'
+      ],
+      links: [
+        {
+          alt: 'https://www.pio.gov.cy/coronavirus/eng',
+          src: 'https://www.pio.gov.cy/coronavirus/eng'
+        }
       ],
       text: 'All attendees must follow measures in accordance with Ministry of Health\ndirectives. <https://www.pio.gov.cy/coronavirus/eng>'
     },
@@ -29,6 +45,12 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       heading: 3,
       content: [
         '[Cafe Nero Finikoudes, Larnaka](https://goo.gl/maps/Bzjxdeat3BSdsUSVA)'
+      ],
+      links: [
+        {
+          alt: 'Cafe Nero Finikoudes, Larnaka',
+          src: 'https://goo.gl/maps/Bzjxdeat3BSdsUSVA'
+        }
       ],
       text: '[Cafe Nero Finikoudes, Larnaka](https://goo.gl/maps/Bzjxdeat3BSdsUSVA)'
     },
@@ -164,6 +186,12 @@ test('pasre(md) should parse Broadcast sections', async (t) => {
     'event-description': {
       title: 'Event Description',
       heading: 3,
+      images: [
+        {
+          alt: 'Ancient-Odeon-amphitheatre-in-Paphos-Archaeological-Park,-Cyprus-1154782035_1368x769',
+          src: 'https://user-images.githubusercontent.com/74390/205858128-171c2402-1230-45b3-ae42-cb9cb8180e31.jpeg'
+        }
+      ],
       content: [
         '![Ancient-Odeon-amphitheatre-in-Paphos-Archaeological-Park,-Cyprus-1154782035_1368x769](https://user-images.githubusercontent.com/74390/205858128-171c2402-1230-45b3-ae42-cb9cb8180e31.jpeg)',
         "New year, new event! We're going to start 2023 with a blast."
@@ -248,6 +276,12 @@ test('pasre(md) should parse Broadcast sections', async (t) => {
       heading: 3,
       content: [
         '[![Eventbrite](https://img.shields.io/static/v1?label=eventbrite\\&logo=eventbrite\\&message=494881282237\\&color=F05537)](https://cdcx-paphos.eventbrite.ca)'
+      ],
+      links: [
+        {
+          alt: undefined,
+          src: 'https://cdcx-paphos.eventbrite.ca'
+        }
       ],
       text: '[![Eventbrite](https://img.shields.io/static/v1?label=eventbrite\\&logo=eventbrite\\&message=494881282237\\&color=F05537)](https://cdcx-paphos.eventbrite.ca)'
     }
