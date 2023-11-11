@@ -13,7 +13,9 @@ import {
   parseDate,
   parseTime,
   parseDuration,
-  parseList
+  parseList,
+  parseImages,
+  parseLinks
 } from './parsers/index.js'
 
 export default async function parseMD(body) {
@@ -25,6 +27,7 @@ export default async function parseMD(body) {
 
   const structuredResponse = {}
   let currentHeading = null
+
   for (const token of tokens.children) {
     const text = await unified()
       .use(remarkGfm)
@@ -49,6 +52,8 @@ export default async function parseMD(body) {
       const obj = structuredResponse[currentHeading]
 
       const date = parseDate(cleanText)
+      const images = parseImages(token.children)
+      const links = parseLinks(token.children)
       const time = parseTime(cleanText)
       const duration = parseDuration(cleanText)
 
@@ -62,6 +67,14 @@ export default async function parseMD(body) {
 
       if (duration) {
         obj.duration = duration
+      }
+
+      if (links && links.length > 0) {
+        obj.links = links
+      }
+
+      if (images && images.length > 0) {
+        obj.images = images
       }
 
       obj.content.push(cleanText)

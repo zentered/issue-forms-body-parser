@@ -82,9 +82,9 @@
     "unified": "^11.0.4"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^18.1.0",
+    "@commitlint/config-conventional": "^18.4.0",
     "@vercel/ncc": "^0.38.1",
-    "commitlint": "^18.2.0",
+    "commitlint": "^18.4.0",
     "eslint": "^8.53.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-node": "^11.1.0",
