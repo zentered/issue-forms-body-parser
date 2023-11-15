@@ -1,2 +1,7 @@
 test
 action
+.github
+.husky
+.eslint*
+.prettier*
+src
