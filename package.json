@@ -68,31 +68,31 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.10.1",
-    "@actions/github": "^6.0.0",
-    "@sindresorhus/slugify": "^2.2.1",
-    "date-fns": "^2.30.0",
-    "date-fns-tz": "^2.0.0",
-    "debug": "^4.3.4",
-    "is-ci": "^3.0.1",
-    "remark-gfm": "^4.0.0",
+    "@actions/core": "^3.0.0",
+    "@actions/github": "^9.0.0",
+    "@sindresorhus/slugify": "^3.0.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "debug": "^4.4.3",
+    "is-ci": "^4.1.0",
+    "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
-    "strip-final-newline": "^3.0.0",
-    "unified": "^11.0.4"
+    "strip-final-newline": "^4.0.0",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^18.4.0",
-    "@vercel/ncc": "^0.38.1",
-    "commitlint": "^18.4.0",
+    "@commitlint/config-conventional": "^20.4.3",
+    "@vercel/ncc": "^0.38.4",
+    "commitlint": "^20.4.3",
     "eslint": "^8.53.0",
-    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-json": "^4.0.1",
     "eslint-plugin-node": "^11.1.0",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "license-checker": "^25.0.1",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.0.3"
+    "prettier": "^3.8.1"
   },
   "engines": {
     "node": ">=18"
