@@ -68,10 +68,10 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^3.0.0",
-    "@actions/github": "^9.0.0",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
     "@sindresorhus/slugify": "^3.0.0",
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.4.0",
     "date-fns-tz": "^3.2.0",
     "debug": "^4.4.3",
     "is-ci": "^4.1.0",
@@ -82,17 +82,17 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^20.4.3",
-    "@vercel/ncc": "^0.38.4",
-    "commitlint": "^20.4.3",
-    "eslint": "^8.53.0",
+    "@commitlint/config-conventional": "^21.0.2",
+    "@vercel/ncc": "^0.44.0",
+    "commitlint": "^21.0.2",
+    "eslint": "^10.4.1",
     "eslint-plugin-json": "^4.0.1",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^9.1.7",
     "license-checker": "^25.0.1",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.4"
   },
   "engines": {
     "node": ">=18"
