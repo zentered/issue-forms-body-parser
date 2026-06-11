@@ -46,7 +46,7 @@ jobs:
 
       - name: Test input body parsed
         env:
-          DATA: ${{ toJSON(steps.parse_with_body.outputs.data) }}
+          DATA: ${{ steps.parse_with_body.outputs.data }}
         run: |
           expected="Event Description"
           title=$(echo "$DATA" | jq -r '.["event-description"].title')
