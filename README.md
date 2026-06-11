@@ -132,7 +132,8 @@ jobs:
 > backticks executes as a shell command. Always pass it through an `env:`
 > variable and reference `"$DATA"` as shown above, and treat any field
 > (including `links`/`images` URLs) as untrusted before using it in `ref:`, API
-> calls, or other sinks.
+> calls, or other sinks. See [SECURITY.md](./SECURITY.md) for the full threat
+> model.
 
 You can also provide a custom `body` input:
 
