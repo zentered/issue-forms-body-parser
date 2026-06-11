@@ -124,15 +124,15 @@ jobs:
         run: echo "$DATA"
 ```
 
-> [!WARNING] The parsed `data` output is derived entirely from the issue body,
-> which is **untrusted user input** - on `issues`-triggered workflows anyone who
-> can open an issue controls it. Never interpolate it directly into a `run:`
-> script (e.g. `run: echo ${{ steps.parse.outputs.data }}`): `toJSON()` escapes
-> JSON, not shell metacharacters, so a value containing `$(...)` or backticks
-> executes as a shell command. Always pass it through an `env:` variable and
-> reference `"$DATA"` as shown above, and treat any field (including
-> `links`/`images` URLs) as untrusted before using it in `ref:`, API calls, or
-> other sinks.
+> **⚠️ Security:** The parsed `data` output is derived entirely from the issue
+> body, which is **untrusted user input** - on `issues`-triggered workflows
+> anyone who can open an issue controls it. Never interpolate it directly into a
+> `run:` script (e.g. `run: echo ${{ steps.parse.outputs.data }}`): `toJSON()`
+> escapes JSON, not shell metacharacters, so a value containing `$(...)` or
+> backticks executes as a shell command. Always pass it through an `env:`
+> variable and reference `"$DATA"` as shown above, and treat any field
+> (including `links`/`images` URLs) as untrusted before using it in `ref:`, API
+> calls, or other sinks.
 
 You can also provide a custom `body` input:
 
