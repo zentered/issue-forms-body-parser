@@ -2,15 +2,23 @@ name: e2e test
 
 on: issues
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Issue Forms Body Parser
         id: parse
         uses: ./
-      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
+      - name: Print parsed data
+        env:
+          DATA: ${{ toJSON(steps.parse.outputs.data) }}
+        run: echo "$DATA"
 
       - name: Read an issue content
         id: read_issue
@@ -23,4 +31,7 @@ jobs:
         uses: ./
         with:
           body: ${{ steps.read_issue.outputs.body }}
-      - run: echo ${{ toJSON(steps.parse_with_body.outputs.data) }}
+      - name: Print parsed data with body
+        env:
+          DATA: ${{ toJSON(steps.parse_with_body.outputs.data) }}
+        run: echo "$DATA"
