@@ -1,7 +1,7 @@
 'use strict'
 
-import github from '@actions/github'
-import core from '@actions/core'
+import * as github from '@actions/github'
+import * as core from '@actions/core'
 import parse from './parse.js'
 
 async function run() {
