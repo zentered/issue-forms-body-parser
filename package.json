@@ -100,7 +100,7 @@
     "node": ">=18"
   },
   "overrides": {
-    "serialize-javascript": "^7.0.5"
-  },
+    "serialize-javascript": "7.0.5"
+  }
   "src": "src/parse.js"
 }
