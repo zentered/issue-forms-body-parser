@@ -136,8 +136,8 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
     'repository-description': {
       title: 'Repository description',
       heading: 3,
-      content: ['*No response*'],
-      text: '*No response*'
+      content: [],
+      text: null
     },
     'repository-visibility': {
       title: 'Repository visibility',
@@ -148,8 +148,8 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
     'repository-justification': {
       title: 'Repository justification',
       heading: 3,
-      content: ['*No response*'],
-      text: '*No response*'
+      content: [],
+      text: null
     },
     'repository-access': {
       title: 'Repository access',
