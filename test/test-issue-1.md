@@ -74,3 +74,7 @@ _No response_
 ### Repository access
 
 @tinyfists/under_scores
+
+### Repository notes
+
+\_No response\_

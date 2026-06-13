@@ -51,6 +51,12 @@ export default async function parseMD(body) {
     } else if (token.type === 'paragraph' && currentHeading) {
       const obj = structuredResponse[currentHeading]
 
+      const trimmedText = cleanText.trim()
+      if (trimmedText === '*No response*' || trimmedText === '_No response_') {
+        obj.text = null
+        continue
+      }
+
       const date = parseDate(cleanText)
       const images = parseImages(token.children)
       const links = parseLinks(token.children)
