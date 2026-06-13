@@ -6,8 +6,10 @@ Related issue:
 ## Problem
 
 GitHub Issue Forms render an optional field that was left blank as the literal
-markdown `_No response_`. The parser currently treats this like any other
-paragraph, producing:
+markdown `_No response_`. By the time `parse.js` re-stringifies the paragraph
+with `remark-stringify`'s default emphasis marker, `_No response_` is normalized
+to `*No response*`. The parser currently treats this like any other paragraph,
+producing:
 
 ```json
 "field": {
@@ -25,7 +27,13 @@ consumers to special-case the string `*No response*`.
 
 In `src/parse.js`, inside the `paragraph` branch, after computing `cleanText`:
 
-1. If `cleanText === '*No response*'`, treat the field as empty:
+1. If the trimmed `cleanText` is `*No response*` or `_No response_`, treat the
+   field as empty:
+   - Matching both forms covers `remark-stringify`'s default asterisk emphasis
+     (the normal case for the GitHub Issue Forms placeholder) as well as the
+     underscore form, which can occur if `cleanText` contains escaped
+     underscores that get unescaped back to `_No response_` by the `\\_` cleanup
+     step earlier in the loop.
    - Do not run date/time/duration/links/images parsing on it.
    - Do not push it into `obj.content`.
    - Set `obj.text = null` directly.
@@ -34,9 +42,9 @@ In `src/parse.js`, inside the `paragraph` branch, after computing `cleanText`:
 ### Why this is sufficient
 
 The closing loop in `parse.js` (the `for (const key in structuredResponse)`
-block) only overwrites `token.text` when `content.length > 0`. Since the
-`*No response*` paragraph is never pushed to `content`, `content` stays `[]`,
-and the explicit `obj.text = null` set above is preserved.
+block) only overwrites `token.text` when `content.length > 0`. Since the "No
+response" placeholder paragraph is never pushed to `content`, `content` stays
+`[]`, and the explicit `obj.text = null` set above is preserved.
 
 ### Resulting shape
 
@@ -70,6 +78,11 @@ Update `test/parse-issue.test.js` expectations for:
 - `repository-justification` (same)
 
 Both become `content: [], text: null`.
+
+Add a fixture field whose raw markdown contains escaped underscores
+(`\_No response\_`), which `parse.js` unescapes back to `_No response_` before
+the placeholder check. This covers the underscore branch of the check added
+above, expecting `content: [], text: null`.
 
 ## Versioning
 

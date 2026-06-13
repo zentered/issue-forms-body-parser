@@ -51,7 +51,8 @@ export default async function parseMD(body) {
     } else if (token.type === 'paragraph' && currentHeading) {
       const obj = structuredResponse[currentHeading]
 
-      if (cleanText === '*No response*') {
+      const trimmedText = cleanText.trim()
+      if (trimmedText === '*No response*' || trimmedText === '_No response_') {
         obj.text = null
         continue
       }

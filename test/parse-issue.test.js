@@ -156,6 +156,12 @@ test('parse(md) should parse GitHub Issue Form data into useful, structured data
       heading: 3,
       content: ['@tinyfists/under_scores'],
       text: '@tinyfists/under_scores'
+    },
+    'repository-notes': {
+      title: 'Repository notes',
+      heading: 3,
+      content: [],
+      text: null
     }
   }
 
