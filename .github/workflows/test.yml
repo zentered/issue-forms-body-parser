@@ -10,6 +10,9 @@ on:
       - '**'
       - '!main'
 
+permissions:
+  contents: read
+
 jobs:
   test:
     env:
@@ -42,10 +45,12 @@ jobs:
           body: ${{ steps.read_issue.outputs.body }}
 
       - name: Test input body parsed
+        env:
+          DATA: ${{ steps.parse_with_body.outputs.data }}
         run: |
           expected="Event Description"
-          title=$(echo ${{ toJSON(steps.parse_with_body.outputs.data) }} | jq -r '.["event-description"].title')
-          if [[ $title != $expected ]]; then
+          title=$(printf '%s' "$DATA" | jq -r '.["event-description"].title')
+          if [[ "$title" != "$expected" ]]; then
             echo "Title \"${title}\" does not match \"${expected}\""
             exit 1
           fi

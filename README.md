@@ -118,8 +118,22 @@ jobs:
       - name: Issue Forms Body Parser
         id: parse
         uses: zentered/issue-forms-body-parser@v2.0.0
-      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
+      - name: Print parsed data
+        env:
+          DATA: ${{ steps.parse.outputs.data }}
+        run: echo "$DATA"
 ```
+
+> **⚠️ Security:** The parsed `data` output is derived entirely from the issue
+> body, which is **untrusted user input** - on `issues`-triggered workflows
+> anyone who can open an issue controls it. Never interpolate it directly into a
+> `run:` script (e.g. `run: echo ${{ steps.parse.outputs.data }}`): `toJSON()`
+> escapes JSON, not shell metacharacters, so a value containing `$(...)` or
+> backticks executes as a shell command. Always pass it through an `env:`
+> variable and reference `"$DATA"` as shown above, and treat any field
+> (including `links`/`images` URLs) as untrusted before using it in `ref:`, API
+> calls, or other sinks. See [SECURITY.md](./SECURITY.md) for the full threat
+> model.
 
 You can also provide a custom `body` input:
 
@@ -141,17 +155,27 @@ jobs:
     steps:
       - name: Fetch the issue
         id: read_issue_body
-        run:
-          echo "body=$(gh issue view ${{ inputs.issue_number }} --repo ${{
-          github.repo }} --json body --jq '.body')" >> $GITHUB_OUTPUT
+        env:
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+          REPO: ${{ github.repository }}
+        run: |
+          delimiter="$(openssl rand -hex 8)"
+          {
+            echo "body<<$delimiter"
+            gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json body --jq '.body'
+            echo "$delimiter"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Issue Forms Body Parser
         id: parse
         uses: zentered/issue-forms-body-parser@v2.0.0
         with:
-          body: ${{ steps.read_issue_body.output.body }}
+          body: ${{ steps.read_issue_body.outputs.body }}
 
-      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
+      - name: Print parsed data
+        env:
+          DATA: ${{ steps.parse.outputs.data }}
+        run: echo "$DATA"
 ```
 
 ### NPM
