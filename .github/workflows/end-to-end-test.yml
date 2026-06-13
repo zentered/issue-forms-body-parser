@@ -17,7 +17,7 @@ jobs:
         uses: ./
       - name: Print parsed data
         env:
-          DATA: ${{ toJSON(steps.parse.outputs.data) }}
+          DATA: ${{ steps.parse.outputs.data }}
         run: echo "$DATA"
 
       - name: Read an issue content
@@ -33,5 +33,5 @@ jobs:
           body: ${{ steps.read_issue.outputs.body }}
       - name: Print parsed data with body
         env:
-          DATA: ${{ toJSON(steps.parse_with_body.outputs.data) }}
+          DATA: ${{ steps.parse_with_body.outputs.data }}
         run: echo "$DATA"

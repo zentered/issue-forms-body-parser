@@ -49,8 +49,8 @@ jobs:
           DATA: ${{ steps.parse_with_body.outputs.data }}
         run: |
           expected="Event Description"
-          title=$(echo "$DATA" | jq -r '.["event-description"].title')
-          if [[ $title != $expected ]]; then
+          title=$(printf '%s' "$DATA" | jq -r '.["event-description"].title')
+          if [[ "$title" != "$expected" ]]; then
             echo "Title \"${title}\" does not match \"${expected}\""
             exit 1
           fi

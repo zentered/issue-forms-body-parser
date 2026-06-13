@@ -120,7 +120,7 @@ jobs:
         uses: zentered/issue-forms-body-parser@v2.0.0
       - name: Print parsed data
         env:
-          DATA: ${{ toJSON(steps.parse.outputs.data) }}
+          DATA: ${{ steps.parse.outputs.data }}
         run: echo "$DATA"
 ```
 
@@ -159,10 +159,11 @@ jobs:
           ISSUE_NUMBER: ${{ inputs.issue_number }}
           REPO: ${{ github.repository }}
         run: |
+          delimiter="$(openssl rand -hex 8)"
           {
-            echo "body<<EOF"
+            echo "body<<$delimiter"
             gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json body --jq '.body'
-            echo "EOF"
+            echo "$delimiter"
           } >> "$GITHUB_OUTPUT"
 
       - name: Issue Forms Body Parser
@@ -173,7 +174,7 @@ jobs:
 
       - name: Print parsed data
         env:
-          DATA: ${{ toJSON(steps.parse.outputs.data) }}
+          DATA: ${{ steps.parse.outputs.data }}
         run: echo "$DATA"
 ```
 

@@ -56,7 +56,7 @@ environment variables and are not re-interpolated into the script:
 # SAFE
 - name: Print parsed data
   env:
-    DATA: ${{ toJSON(steps.parse.outputs.data) }}
+    DATA: ${{ steps.parse.outputs.data }}
   run: echo "$DATA"
 ```
 
