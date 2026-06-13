@@ -1,7 +1,7 @@
 'use strict'
 
 import { parse, isMatch } from 'date-fns'
-import { zonedTimeToUtc } from 'date-fns-tz'
+import { fromZonedTime } from 'date-fns-tz'
 
 const loc = 'UTC'
 const commonDateFormats = [
@@ -19,7 +19,7 @@ export default function parseDate(text) {
     return isMatch(text, format)
   })
   if (match.indexOf(true) > -1) {
-    const date = zonedTimeToUtc(
+    const date = fromZonedTime(
       parse(text, commonDateFormats[match.indexOf(true)], new Date()),
       loc
     ).toJSON()
