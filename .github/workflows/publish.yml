@@ -31,17 +31,21 @@ jobs:
     permissions:
       contents: write
       deployments: write
-      issues: read
+      issues: write
       pull-requests: write
       id-token: write
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
       - run: npm ci
+      # pkg/ and action/ are committed but stale; semantic-release packs the
+      # working tree, so the build has to run in this job.
+      - run: npm run build
       - run: npx semantic-release
