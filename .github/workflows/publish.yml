@@ -44,6 +44,9 @@ jobs:
         with:
           node-version: 24
           cache: 'npm'
+      # Trusted publishing needs npm >= 11.5.1; the npm bundled with a given
+      # Node 24 runner image isn't guaranteed to meet that.
+      - run: npm install -g npm@12
       - run: npm ci
       # pkg/ and action/ are committed but stale; semantic-release packs the
       # working tree, so the build has to run in this job.
