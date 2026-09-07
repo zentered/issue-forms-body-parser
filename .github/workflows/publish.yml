@@ -1,11 +1,7 @@
 name: Publish
 
 permissions:
-  contents: write
-  deployments: write
-  issues: read
-  pull-requests: write
-  id-token: write
+  contents: read
 
 on:
   push:
@@ -28,4 +24,28 @@ jobs:
         env:
           GITHUB_REPOSITORY: zentered/issue-forms-body-parser-test
       - run: npm run release
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      deployments: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+      - run: npm ci
+      # pkg/ and action/ are committed but stale; semantic-release packs the
+      # working tree, so the build has to run in this job.
+      - run: npm run build
       - run: npx semantic-release
