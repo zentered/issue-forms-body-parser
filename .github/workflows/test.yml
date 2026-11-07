@@ -32,6 +32,14 @@ jobs:
 
       - run: npm run build
 
+      - name: Check action/ and pkg/ are up to date
+        run: |
+          if [ -n "$(git status --porcelain -- action pkg)" ]; then
+            git status --short -- action pkg
+            echo "action/ or pkg/ is stale. Run 'npm run build' and commit the result."
+            exit 1
+          fi
+
       - name: Read an issue content
         id: read_issue
         run: |

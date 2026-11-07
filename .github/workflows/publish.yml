@@ -51,7 +51,26 @@ jobs:
       # Node 24 runner image isn't guaranteed to meet that.
       - run: npm install -g npm@12.0.2
       - run: npm ci
-      # pkg/ and action/ are committed but stale; semantic-release packs the
-      # working tree, so the build has to run in this job.
+      # main is protected, so the release cannot push a build commit. Instead
+      # action/ and pkg/ are committed in the PR and checked in test.yml. This
+      # step stops a release if they are still stale, because the release tag
+      # points at the main commit and the Action runs action/index.js from it.
       - run: npm run build
+      - name: Check action/ and pkg/ are up to date
+        run: |
+          if [ -n "$(git status --porcelain -- action pkg)" ]; then
+            git status --short -- action pkg
+            echo "action/ or pkg/ is stale. Run 'npm run build' and commit the result."
+            exit 1
+          fi
       - run: npx semantic-release
+      - name: Move the major version tag
+        run: |
+          tag="$(git tag --points-at HEAD --list 'v[0-9]*.[0-9]*.[0-9]*' | sort -V | tail -n1)"
+          if [ -z "$tag" ]; then
+            echo "No release on this commit, major tag unchanged."
+            exit 0
+          fi
+          major="${tag%%.*}"
+          git tag -f "$major" HEAD
+          git push -f origin "refs/tags/$major"
