@@ -18,11 +18,14 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22, 24]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: ${{ matrix.node }}
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
@@ -31,6 +34,16 @@ jobs:
           GITHUB_REPOSITORY: zentered/issue-forms-body-parser-test
 
       - run: npm run build
+        if: matrix.node == 24
+
+      - name: Check action/ and pkg/ are up to date
+        if: matrix.node == 24
+        run: |
+          if [ -n "$(git status --porcelain -- action pkg)" ]; then
+            git status --short -- action pkg
+            echo "action/ or pkg/ is stale. Run 'npm run build' and commit the result."
+            exit 1
+          fi
 
       - name: Read an issue content
         id: read_issue

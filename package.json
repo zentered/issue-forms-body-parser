@@ -97,7 +97,7 @@
     "prettier": "^3.8.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "overrides": {
     "serialize-javascript": "7.0.5"
