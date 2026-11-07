@@ -102,6 +102,13 @@ See more examples in [md test cases](./test/test-issue-1.md) and
 - `duration`: currently only the format `XXhYYm` is supported as duration, ie.
   `1h30m` returns a `duration` object with `hours` and `minutes`.
 
+### Upgrading to v3
+
+Empty fields now return `null`. A field that GitHub renders as `_No response_`
+returns `"text": null` instead of the literal string. The Action runs on Node 24
+(`runs.using: node24`) and the npm package requires Node 20 or later. Use `@v3`
+to follow the latest v3 release.
+
 ## Installation & Usage
 
 ### GitHub Actions
@@ -117,7 +124,7 @@ jobs:
     steps:
       - name: Issue Forms Body Parser
         id: parse
-        uses: zentered/issue-forms-body-parser@v2.0.0
+        uses: zentered/issue-forms-body-parser@v3
       - name: Print parsed data
         env:
           DATA: ${{ steps.parse.outputs.data }}
@@ -168,7 +175,7 @@ jobs:
 
       - name: Issue Forms Body Parser
         id: parse
-        uses: zentered/issue-forms-body-parser@v2.0.0
+        uses: zentered/issue-forms-body-parser@v3
         with:
           body: ${{ steps.read_issue_body.outputs.body }}
 
